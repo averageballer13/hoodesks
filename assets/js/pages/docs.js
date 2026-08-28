@@ -51,18 +51,20 @@ $('#numbers').replaceChildren(...NUMBERS.map(([k, v]) =>
   el('tr', {}, el('td', { class: 'em' }, k), el('td', {}, v))));
 
 /* -- accounts ------------------------------------------------------------- */
-const addrRow = (label, addr, lead) =>
+const addrRow = (label, addr, href, lead) =>
   el('div', { class: 'kv' },
     el('span', { class: 'kv__k' }, lead != null ? `${lead}  ${label}` : label),
     el('a', {
-      class: 'addr', href: CHAIN.explorerAccount(addr),
-      target: '_blank', rel: 'noreferrer', title: addr,
+      class: 'addr', href, target: '_blank', rel: 'noreferrer', title: addr,
     }, fmt.addr(addr)));
 
-$('#accounts').replaceChildren(...ACCOUNTS.map((a) => addrRow(a.label, a.addr)));
+$('#accounts').replaceChildren(...ACCOUNTS.map((a) =>
+  addrRow(a.label, a.addr, CHAIN.explorerAccount(a.addr))));
 
+// Stock tokens link to their token page rather than the plain account view.
 $('#assets').replaceChildren(...ROTATION.map((a) =>
-  addrRow(`${a.sym} · ${a.name}`, a.addr, String(a.i).padStart(2, '0'))));
+  addrRow(`${a.sym} · ${a.name}`, a.addr, CHAIN.explorerToken(a.addr),
+    String(a.i).padStart(2, '0'))));
 
 /* -- table of contents + scrollspy ---------------------------------------- */
 const sections = $$('.doc section[id]');

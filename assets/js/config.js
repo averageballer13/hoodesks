@@ -11,10 +11,14 @@ export const CHAIN = {
   short: 'Robinhood Chain',
   currency: 'ETH',
   launchpad: 'Pons',
-  launchpadUrl: 'https://pons.xyz',
-  explorer: 'https://explorer.robinhood.com',
+  launchpadUrl: 'https://docs.ponsfamily.com/v2',
+  explorer: 'https://robinhoodchain.blockscout.com',
   explorerAccount: (a) => `${CHAIN.explorer}/address/${a}`,
+  explorerToken: (a) => `${CHAIN.explorer}/token/${a}`,
   explorerTx: (h) => `${CHAIN.explorer}/tx/${h}`,
+  // Canonical wrapped ETH and Global Dollar, from the Robinhood Chain docs.
+  weth: '0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73',
+  usdg: '0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168',
 };
 
 export const BRAND = {
@@ -46,18 +50,27 @@ export const ECON = {
 
 /* --- the rotation --------------------------------------------------------
    Ten tokenised assets. A round spends the whole pot on whichever is next.
+
+   Every address below is a canonical Robinhood Stock Token, taken from the
+   live on-chain asset registry at docs.robinhood.com/chain/contracts.
+   A token with a matching ticker at a different address is NOT one of them.
+
+   Note on what is NOT here: Robinhood Chain's registry carries no HOOD,
+   ANTHROPIC, POLYMARKET or KALSHI token. Of the pre-IPO names only a handful
+   are tokenised — SPCX, FLY, CBRS, INFQ, NAVN. GME stands in for HOOD, which
+   is the better joke anyway.
    ------------------------------------------------------------------------ */
 export const ROTATION = [
-  { i: 1,  sym: 'AAPL',       name: 'Apple',       addr: '0x7A1c9E4bD2f83A05C6eE1b74F9d0aB35c2E8F410' },
-  { i: 2,  sym: 'MSFT',       name: 'Microsoft',   addr: '0x3F82Db6C15aE9047bB2c8E5d13F76A0e94C1D2b8' },
-  { i: 3,  sym: 'NVDA',       name: 'Nvidia',      addr: '0xB4e07C93a2D1f65E8c40Ab7219dF3E5a86C0b7D2' },
-  { i: 4,  sym: 'AMZN',       name: 'Amazon',      addr: '0x91Ac53E7b8D0f24C6a13eB9F507D2c84A1e6F3B0' },
-  { i: 5,  sym: 'HOOD',       name: 'Robinhood',   addr: '0x00C8052Ef4a91D7b36C05eA8B1f92D473Ac6E815' },
-  { i: 6,  sym: 'CRCL',       name: 'Circle',      addr: '0x5D3bA209cE71f48B6a0dC93E2f815B7a04E9C6D1' },
-  { i: 7,  sym: 'SPCX',       name: 'SpaceX',      addr: '0xE28f4C71bD905A63e1c7F02aB84D9635C0a1E7B4' },
-  { i: 8,  sym: 'ANTHROPIC',  name: 'Anthropic',   addr: '0xA1b73E0cF925D64a8B1e05C7D2f9386Ea40C5B71' },
-  { i: 9,  sym: 'POLYMARKET', name: 'Polymarket',  addr: '0xC70eB1a4D5f823906Ac1eF74B0d29A63E85C0f12' },
-  { i: 10, sym: 'KALSHI',     name: 'Kalshi',      addr: '0xF6019dA3bC48e725D0a3F91cB27E64085Ba2C9E3' },
+  { i: 1,  sym: 'AAPL', name: 'Apple',      addr: '0xaF3D76f1834A1d425780943C99Ea8A608f8a93f9' },
+  { i: 2,  sym: 'MSFT', name: 'Microsoft',  addr: '0xe93237C50D904957Cf27E7B1133b510C669c2e74' },
+  { i: 3,  sym: 'NVDA', name: 'Nvidia',     addr: '0xd0601CE157Db5bdC3162BbaC2a2C8aF5320D9EEC' },
+  { i: 4,  sym: 'AMZN', name: 'Amazon',     addr: '0x12f190a9F9d7D37a250758b26824B97CE941bF54' },
+  { i: 5,  sym: 'GME',  name: 'GameStop',   addr: '0x1b0E319c6A659F002271B69dB8A7df2F911c153E' },
+  { i: 6,  sym: 'CRCL', name: 'Circle',     addr: '0xdF0992E440dD0be65BD8439b609d6D4366bf1CB5' },
+  { i: 7,  sym: 'SPCX', name: 'SpaceX',     addr: '0x4a0E65A3EcceC6dBe60AE065F2e7bb85Fae35eEa' },
+  { i: 8,  sym: 'CRWV', name: 'CoreWeave',  addr: '0x5f10A1C971B69e47e059e1dC91901B59b3fB49C3' },
+  { i: 9,  sym: 'PLTR', name: 'Palantir',   addr: '0x894E1EC2D74FFE5AEF8Dc8A9e84686acCB964F2A' },
+  { i: 10, sym: 'TSLA', name: 'Tesla',      addr: '0x322F0929c4625eD5bAd873c95208D54E1c003b2d' },
 ];
 
 /* --- deployed accounts ---------------------------------------------------

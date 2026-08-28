@@ -122,10 +122,17 @@
                 <tbody>
                   <tr><td class="em">Mint</td><td><span data-v="surcharge"></span> surcharge</td><td class="em"><span data-v="toPot"></span></td></tr>
                   <tr><td class="em">Sale on a marketplace</td><td><span data-v="royalty"></span> royalty</td><td class="em">Full</td></tr>
-                  <tr><td class="em"><span data-v="ticker"></span> traded on <span data-v="launchpad"></span></td><td>Creator fees</td><td class="em">Full · swept every <span data-v="sweep"></span> min</td></tr>
+                  <tr><td class="em"><span data-v="ticker"></span> traded on <span data-v="launchpad"></span></td><td>Creator fees</td><td class="em">Full · claimed every <span data-v="sweep"></span> min</td></tr>
                 </tbody>
               </table>
             </div>
+            <p>
+              Creator fees on <span data-v="launchpad"></span> accumulate against the fee
+              recipient rather than being pushed to it, so they do not arrive on their own:
+              a keeper claims them into the pot on a fixed cadence. The recipient is set at
+              launch and can be repointed later, which is what lets the pot — a contract —
+              be the one collecting.
+            </p>
             <p>
               The <span data-v="deposit"></span> <span data-v="ticker"></span> deposit funds none
               of this. It is destroyed, it goes nowhere, and nobody receives it. Total supply is

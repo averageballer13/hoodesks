@@ -133,7 +133,8 @@ export function changelog() {
       kind: 'PROTOCOL',
       at: 'Aug 27, 2026',
       body:
-        'AAPL, MSFT, NVDA, AMZN, HOOD, CRCL, SPCX, ANTHROPIC, POLYMARKET and KALSHI. ' +
+        'AAPL, MSFT, NVDA, AMZN, GME, CRCL, SPCX, CRWV, PLTR and TSLA — every one a ' +
+        'canonical Robinhood Stock Token, checked against the live on-chain registry. ' +
         'A round spends the pot in full on whichever is next and splits it equally.',
     },
     {
