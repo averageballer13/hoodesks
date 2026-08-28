@@ -79,6 +79,16 @@ collection.json        trait counts, percentages, and every rank
 The PNG encoder is written into `tools/export.mjs` on top of `node:zlib` —
 there is nothing to install.
 
+### Contact sheets
+
+```bash
+node tools/sheet.mjs --count 120 --cols 15      # a spread across the set
+node tools/sheet.mjs --rare 30 --cols 10        # the rarest
+node tools/sheet.mjs --from 1 --count 64        # the first serials
+```
+
+One PNG with many desks on it, for a reveal post.
+
 ---
 
 ## Going live
@@ -142,13 +152,3 @@ Any static host. The repo is already shaped for it:
 - `404.html` is served for unknown paths by GitHub Pages, Netlify and Vercel
   alike.
 - Nothing needs building, so there is no build command to configure.
-
-### Contact sheets
-
-```bash
-node tools/sheet.mjs --count 120 --cols 15      # a spread across the set
-node tools/sheet.mjs --rare 30 --cols 10        # the rarest
-node tools/sheet.mjs --from 1 --count 64        # the first serials
-```
-
-One PNG with many desks on it, for a reveal post.
