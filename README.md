@@ -140,6 +140,35 @@ of its pre-launch state.
 
 ---
 
+## Brand
+
+The masters live in `brand/` and everything the site serves is derived from
+them, so there is one place to change the logo:
+
+```
+brand/logo.png              square mark, any size
+brand/banner.png            wide banner, any size
+brand/logo-transparent.png  cut-out variant, kept for print
+```
+
+```bash
+node tools/icons.mjs
+```
+
+builds `assets/img/mark-64.png` (header), `favicon-32.png`,
+`favicon-180.png` (apple-touch), `logo-512.png`, and `og.png` — the banner
+letterboxed onto a 1200x630 Open Graph card. The tool trims the master's dead
+margin first, so the mark fills a 16px tab instead of floating in it.
+
+It decodes, resamples and re-encodes PNG on `node:zlib` alone — same as the
+collection exporter, nothing to install.
+
+The mark is a black tile, so it carries its own ground and needs no light and
+dark variants. That is also why the header applies its own `border-radius`
+rather than the artwork baking one in.
+
+---
+
 ## Theme
 
 Robinhood palette, defined once in `assets/css/theme.css`:

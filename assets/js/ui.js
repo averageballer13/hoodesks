@@ -78,20 +78,12 @@ function paintThemeBtn(btn) {
   btn.title = dark ? 'Light' : 'Dark';
 }
 
-/* -- logo ----------------------------------------------------------------- */
+/* -- logo ----------------------------------------------------------------
+   The brand mark is a black tile, so it carries its own ground and needs no
+   per-theme variant. Rebuild the sizes with `node tools/icons.mjs`.
+   ------------------------------------------------------------------------ */
 
-/* A pixel terminal reduced to its silhouette: screen, stand, deck. */
-export const LOGO_SVG = `
-<svg class="hdr__mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-  <rect x="1" y="1" width="30" height="30" rx="8" fill="var(--brand)"/>
-  <rect x="7" y="8"  width="18" height="12" rx="2" fill="#000"/>
-  <rect x="9.5" y="10.5" width="13" height="7" fill="var(--brand)"/>
-  <rect x="10" y="15" width="2" height="2" fill="#000"/>
-  <rect x="13" y="13.5" width="2" height="3.5" fill="#000"/>
-  <rect x="16" y="12" width="2" height="5" fill="#000"/>
-  <rect x="19" y="13" width="2" height="4" fill="#000"/>
-  <rect x="5" y="22" width="22" height="3" rx="1.4" fill="#000"/>
-</svg>`;
+export const LOGO_SRC = 'assets/img/mark-64.png';
 
 /* -- header --------------------------------------------------------------- */
 
@@ -115,7 +107,7 @@ export function mountHeader(current) {
 
   host.replaceChildren(
     el('a', { class: 'hdr__logo', href: 'index.html', 'aria-label': `${BRAND.name} — home` },
-      el('span', { html: LOGO_SVG }).firstElementChild,
+      el('img', { class: 'hdr__mark', src: LOGO_SRC, alt: '', 'aria-hidden': true, width: 26, height: 26 }),
       el('span', { class: 'hdr__word' }, BRAND.wordmark)),
     el('nav', { class: 'nav', 'aria-label': 'Main' },
       NAV.map((n) =>
