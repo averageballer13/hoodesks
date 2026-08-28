@@ -111,12 +111,19 @@ if (eth()) {
 
 /* -- args ---------------------------------------------------------------- */
 
+/** Accept a bare address or anything containing one, like a Pons URL. */
+function readAddress(sel) {
+  const raw = $(sel).value.trim();
+  const found = raw.match(/0x[0-9a-fA-F]{40}/);
+  return found ? found[0] : raw;
+}
+
 function readArgs() {
-  const owner = $('#p-owner').value.trim() || account;
+  const owner = readAddress('#p-owner') || account;
   return [
-    $('#p-token').value.trim(),
+    readAddress('#p-token'),
     toUnits($('#p-amount').value.trim() || '0'),
-    $('#p-protocol').value.trim(),
+    readAddress('#p-protocol'),
     ROTATION.map((r) => r.addr),
     $('#p-uri').value.trim(),
     owner,
