@@ -120,11 +120,21 @@ rotation, and the deployed contract addresses. The docs page reads its prose
 values from here too, via `data-v` attributes, so the numbers in the copy can
 never drift from the numbers in the app.
 
-**`assets/js/data.js`** — the seam between the UI and the chain. Every function
-in it currently returns a deterministic pre-launch state so the site is fully
-browsable before the contracts exist. Replace the bodies with reads against the
-indexer or RPC; the shapes are what the pages expect, so nothing above this file
-has to change.
+**`assets/js/data.js`** — the seam between the UI and the chain. `sync()` looks
+for a deployed collection and reads it; until one exists everything falls back
+to a pre-launch view, so the site is browsable before there is anything to read.
+
+**Nobody has to edit a file after deploying.** A contract from a plain wallet
+takes an address derived from the deployer and its nonce, so
+`COLLECTION_CANDIDATES` holds every address it could occupy and `chain.js`
+finds the live one by asking each for code and confirming with `MAX_SUPPLY()`.
+The site goes live by itself the moment the contract lands.
+
+Regenerate the candidates if the deploying wallet changes:
+
+```bash
+node tools/predict.mjs
+```
 
 ```js
 stats()          // minted, live desks, burned, buys next, paid to holders
@@ -135,8 +145,9 @@ holdings(id)     // [{ sym, name, units, value }]
 myDesks()        // { connected, desks }
 ```
 
-Flip `LAUNCHED` and `MINTED` at the top of `data.js` to move the whole site out
-of its pre-launch state.
+Reads go through the public RPC so visitors see live numbers without a wallet;
+writes go through theirs. The mint page runs the real flow — connect, approve,
+mint — against the deployed contract.
 
 ### Animated GIFs
 

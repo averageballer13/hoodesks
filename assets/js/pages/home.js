@@ -26,7 +26,7 @@ $('#hero-lede').textContent = BRAND.tagline;
 }
 
 /* -- stats bar ------------------------------------------------------------ */
-{
+function renderStats() {
   const s = api.stats();
   $('#minted-count').textContent = fmt.int(s.minted);
   $('#supply-count').textContent = fmt.int(s.supply);
@@ -49,6 +49,7 @@ $('#hero-lede').textContent = BRAND.tagline;
           el('span', {}, c.v)))),
   );
 }
+renderStats();
 
 /* -- leaderboard ---------------------------------------------------------- */
 
@@ -62,7 +63,10 @@ let active = 'all';
 let page = 0;
 
 const rowsHost = $('#rows');
-const pager = makePager((p) => { page = p; render(); });
+const pager = makePager((p) => { page = p; render();
+
+// Then ask the chain and redraw. Everything above stays correct if it fails.
+api.sync().then(() => { renderStats(); render(); }); });
 $('#pager').replaceWith(pager);
 
 const tabsHost = $('#tabs');

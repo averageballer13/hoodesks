@@ -99,6 +99,44 @@ export const ACCOUNTS = [
  */
 export const BASE_URI = `https://${'hoodesks.fun'}/assets/collection/metadata/`;
 
+/**
+ * Where the collection can land. A contract from a plain wallet takes an
+ * address derived from the deployer and its nonce alone, so these are
+ * knowable before it exists — which is what lets the site find the
+ * deployment on its own instead of waiting for someone to paste an address
+ * in. The browser confirms the right one by calling MAX_SUPPLY() on it, so
+ * picking a wrong contract is impossible rather than unlikely.
+ *
+ * Regenerate with: node tools/predict.mjs
+ * Deployer: 0x70a273Bb8225b0788c8C6970195871841d01959E
+ */
+export const COLLECTION_CANDIDATES = [
+  '0x5223367bfCEEEA94eFC14CAF17289f29830AC012',
+  '0x8379b6a0F69540b701e73A6bE6d6b305d169DC76',
+  '0x22a1ecAfd3dC7E31beaE1e3bdB31D35EDA73F0f0',
+  '0xD226F0CD12a0c55F1fF19d6D64D0b78D726E2E87',
+  '0x8381bA3Ff7De61140F638192D055cacD772a5454',
+  '0xF6c2685Bef5A827866B444e211a4e0a8D3f717a3',
+  '0x5EdC478ada2F634bF71d82A6d85253CA47D77152',
+  '0xe9f04c1c127000a4db53D09A4699C9c00f440f9F',
+  '0xe99CAfE7AcA22A1Cf70E561B64ac6aC1da629011',
+  '0x00F390da35845cfD314Af68FceF14bA501b91e3a',
+  '0x6aEA8857E1b4ad90F916cE8Ee982efA941072526',
+  '0xd74B13c42aD8D0Be540fe61411CD980CBE8A4267',
+  '0xE42DDeD81Ec9Ed33A0159fe6e936A1A38bdDE8Fd',
+  '0x4DE8E7e7A65b4D3Dd8EEc0a889be6Bb00cd334CD',
+  '0x5d25f253B1b62A8824f760D06754f4903A019217',
+  '0xC695addAD3fC80b0F3b5920c4D19f076e9Fb2048',
+  '0x7dd7a031Ab743991e4613563f6C1688AC6C09A28',
+  '0x01632b71d095A95D826D278B479A414782FC64A2',
+  '0x8618f4437eA764118664249Cc33161aB771a7D6D',
+  '0x8defAd111F053Ad8d7db16577629ba5d12446888',
+  '0x90B7BF0796ACCE68ab35657563A71da4f2AC13c6',
+  '0x64f2Da44AA3Eb0EeCC053c032d711D4F26e2fCa9',
+  '0x41b7C0aE3D5E9Fea38488c79af14f391399b53f3',
+  '0x16474404aeF6A4932E09c543097E2fcb73f9FcE5',
+];
+
 export const TOKEN = {
   symbol: TOKEN_SYMBOL,
   address: null,

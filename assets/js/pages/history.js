@@ -7,11 +7,11 @@ import { boot, el, $, makePager, tokenMark } from '../ui.js';
 boot('history.html');
 
 const PER_PAGE = 10;
-const s = api.stats();
-const items = api.rounds();
+let s = api.stats();
+let items = api.rounds();
 
 /* -- summary -------------------------------------------------------------- */
-{
+function renderSummary() {
   const last = items[0];
   const cards = [
     { k: 'Rounds', v: fmt.int(s.rounds) },
@@ -27,6 +27,7 @@ const items = api.rounds();
         el('span', {}, c.v)),
       c.sub ? el('div', { class: 'statcard__s' }, c.sub) : null)));
 }
+renderSummary();
 
 /* -- rows ----------------------------------------------------------------- */
 const rowsHost = $('#rows');
@@ -63,6 +64,13 @@ function render() {
 render();
 
 /* -- rotation ------------------------------------------------------------- */
+api.sync().then(() => {
+  s = api.stats();
+  items = api.rounds();
+  renderSummary();
+  render();
+});
+
 $('#rotation').replaceChildren(...ROTATION.map((a) =>
   el('span', { class: 'chip', title: a.name },
     el('span', { class: 'i' }, String(a.i).padStart(2, '0')),
