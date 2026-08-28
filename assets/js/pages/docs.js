@@ -64,7 +64,11 @@ const addrRow = (label, addr, href, lead, sym) =>
     }, fmt.addr(addr)));
 
 $('#accounts').replaceChildren(...ACCOUNTS.map((a) =>
-  addrRow(a.label, a.addr, CHAIN.explorerAccount(a.addr))));
+  a.pending
+    ? el('div', { class: 'kv' },
+        el('span', { class: 'kv__k' }, a.label),
+        el('span', { class: 'kv__v dim' }, 'not deployed yet'))
+    : addrRow(a.label, a.addr, CHAIN.explorerAccount(a.addr))));
 
 // Stock tokens link to their token page rather than the plain account view.
 $('#assets').replaceChildren(...ROTATION.map((a) =>

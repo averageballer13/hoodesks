@@ -6,6 +6,9 @@
    deployment is a one-file edit.
    ========================================================================== */
 
+/** The launch token's ticker. Referenced everywhere rather than repeated. */
+export const TOKEN_SYMBOL = 'DESKS';
+
 export const CHAIN = {
   name: 'Robinhood Chain',
   short: 'Robinhood Chain',
@@ -25,7 +28,7 @@ export const BRAND = {
   name: 'HOODESKS',
   wordmark: 'HOODESKS',
   domain: 'hoodesks.fun',
-  ticker: 'DESKS',
+  ticker: TOKEN_SYMBOL,
   x: 'https://x.com/hoodesks',
   tagline:
     'Every desk runs its own book, held on chain in a vault only it can own. ' +
@@ -38,7 +41,7 @@ export const BRAND = {
    ------------------------------------------------------------------------ */
 export const ECON = {
   supply: 5000,               // desks that can ever exist
-  deposit: 1_000_000,         // $DESKS burned per mint
+  deposit: 1_000_000,         // burned per mint
   surcharge: 0.05,            // ETH, charged by the mint instruction
   surchargeToPot: 0.045,      // ETH
   surchargeToProtocol: 0.005, // ETH
@@ -74,21 +77,22 @@ export const ROTATION = [
 ];
 
 /* --- deployed accounts ---------------------------------------------------
-   Placeholders until the contracts are live. The `pot` and `config`
-   addresses are deterministic (CREATE2), the rest are read off `config`.
+   Only the protocol wallet exists so far. The rest are marked pending rather
+   than filled with plausible-looking placeholders: a fake address on a live
+   page is worse than an empty one, because somebody will send funds to it.
+   Fill `addr` and drop `pending` as each contract is deployed.
    ------------------------------------------------------------------------ */
 export const ACCOUNTS = [
-  { label: 'Protocol',        addr: '0x9E4b7C210aD8f635B01cE97a24Df8560B3aC1e79' },
-  { label: 'Pot',             addr: '0x2C81eF05a736B9d4C0a18E63F5b207Da49C6E831' },
-  { label: 'Treasury',        addr: '0x64Da39C7bE015f82A4c9D06B738E1a5C20F4b9D6' },
-  { label: 'Config',          addr: '0xB157aC03D9e64F82b5a107C6E238D40915Fa7C2E' },
-  { label: 'Collection',      addr: '0x0dE85F3a41C79b620Da4c1E85736F029A8bC4D51' },
-  { label: 'Vault implementation', addr: '0x7B2f90cE614aD3508b7eA1C96D247F350aE8B1C3' },
+  { label: 'Protocol wallet', addr: '0xa0A502e18D8EC97FF64338741b3296e65147002f' },
+  { label: 'Collection · pot', addr: null, pending: true },
+  { label: 'Vault implementation', addr: null, pending: true },
+  { label: 'Swap adapter', addr: null, pending: true },
+  { label: `$${TOKEN_SYMBOL} token`, addr: null, pending: true },
 ];
 
 export const TOKEN = {
-  symbol: 'DESKS',
-  address: '0xD3E5k...pending',
+  symbol: TOKEN_SYMBOL,
+  address: null,
   supplyInitial: 1_000_000_000,
   pons: 'https://pons.xyz',
 };
