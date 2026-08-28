@@ -1,7 +1,7 @@
 {
   "name": "HOODESK #824",
   "description": "A desk that owns a vault. The vault fills with tokenised stock round after round, and whoever holds this token owns whatever is in it.",
-  "image": "ipfs://REPLACE_WITH_CID/824.png",
+  "image": "https://hoodesks.fun/assets/collection/images/824.png",
   "external_url": "https://hoodesks.fun/desk.html?id=824",
   "attributes": [
     {

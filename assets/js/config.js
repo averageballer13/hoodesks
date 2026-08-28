@@ -90,6 +90,15 @@ export const ACCOUNTS = [
   { label: `$${TOKEN_SYMBOL} token`, addr: null, pending: true },
 ];
 
+/**
+ * Where tokenURI points. The collection's 5,000 metadata files and images are
+ * generated into this repo and served by the site itself, so there is nothing
+ * to pin and nothing to pay for. It is centralised — if the host goes down the
+ * metadata goes with it — and `setBaseURI` can move it to IPFS later without
+ * redeploying anything.
+ */
+export const BASE_URI = `https://${'hoodesks.fun'}/assets/collection/metadata/`;
+
 export const TOKEN = {
   symbol: TOKEN_SYMBOL,
   address: null,

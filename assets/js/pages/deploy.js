@@ -2,7 +2,7 @@
    Builds the creation transaction and hands it to the browser wallet. No key
    is read, typed or stored: the wallet signs, this page only encodes. */
 
-import { ACCOUNTS, CHAIN, ECON, ROTATION, TOKEN, fmt } from '../config.js';
+import { ACCOUNTS, BASE_URI, CHAIN, ECON, ROTATION, TOKEN, fmt } from '../config.js';
 import { BUILD, CONSTRUCTOR, HOODESKS_BYTECODE } from '../contract.js';
 import { deployData, toUnits } from '../abi.js';
 import { boot, el, $, tokenMark } from '../ui.js';
@@ -38,6 +38,7 @@ $('#build-pill').textContent = `build ${BUILD.slice(0, 8)}`;
 $('#p-amount').value = String(ECON.deposit);
 $('#p-protocol').value = ACCOUNTS[0].addr ?? '';
 $('#p-token').value = TOKEN.address ?? '';
+$('#p-uri').value = BASE_URI;
 
 $('#rotation').replaceChildren(...ROTATION.map((a) =>
   el('span', { class: 'chip', title: a.addr },
