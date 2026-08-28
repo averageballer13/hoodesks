@@ -8,7 +8,7 @@
    expect, so nothing above this file has to change.
    ========================================================================== */
 
-import { ECON, ROTATION, TOKEN } from './config.js';
+import { CHAIN, ECON, ROTATION, TOKEN } from './config.js';
 import { buildDesks, rankCollection } from './desks.js';
 
 /* -- collection (deterministic, no network) ------------------------------- */
@@ -31,7 +31,29 @@ export const deskById = (id) => collection().tokens[Number(id) - 1] ?? null;
    ------------------------------------------------------------------------ */
 
 const MINTED = 0;          // desks issued so far — 0 until launch
-const LAUNCHED = false;    // flip once the mint is open
+const LAUNCHED = false;    // flip once the collection is deployed and open
+
+/**
+ * Where the launch actually stands. The order is forced rather than chosen:
+ * the collection's constructor takes the token address, so the token has to
+ * exist on the launchpad before anything can be deployed.
+ */
+export function launchStatus() {
+  if (LAUNCHED) return { live: true, label: 'Mint', note: null, steps: [] };
+  return {
+    live: false,
+    label: 'Not live yet',
+    note:
+      `${TOKEN.symbol} launches on ${CHAIN.launchpad} first. The collection is ` +
+      `deployed against its address straight after, and minting opens then.`,
+    steps: [
+      `Launch ${TOKEN.symbol} on ${CHAIN.launchpad}`,
+      'Deploy the collection against the token address',
+      'Point the launchpad creator fees at the pot',
+      'Open the mint',
+    ],
+  };
+}
 
 function rnd(seed) {
   let h = 2166136261 ^ seed;

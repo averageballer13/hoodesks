@@ -1,10 +1,10 @@
 const { expect } = require('chai');
 const { ethers } = require('hardhat');
 
-const SURCHARGE = ethers.parseEther('0.05');
-const PROTOCOL_CUT = ethers.parseEther('0.005');
-const TO_POT = SURCHARGE - PROTOCOL_CUT; // 0.045
-const THRESHOLD = ethers.parseEther('0.01');
+const SURCHARGE = ethers.parseEther('0.01');
+const PROTOCOL_CUT = ethers.parseEther('0.001');
+const TO_POT = SURCHARGE - PROTOCOL_CUT; // 0.009
+const THRESHOLD = ethers.parseEther('0.002');
 const DEPOSIT = ethers.parseEther('1000000'); // 1,000,000 with 18 decimals
 const BURN = '0x000000000000000000000000000000000000dEaD';
 const RATE = 1n; // mock adapter: 1 token unit per wei
@@ -72,7 +72,7 @@ describe('Hoodesks', () => {
       const { hood, desks, alice } = await deploy();
       await desks.mint(alice.address, DEPOSIT);
       await desks.connect(alice).approve(await hood.getAddress(), DEPOSIT);
-      await expect(hood.connect(alice).mint({ value: ethers.parseEther('0.04') }))
+      await expect(hood.connect(alice).mint({ value: ethers.parseEther('0.009') }))
         .to.be.revertedWithCustomError(hood, 'WrongSurcharge');
     });
 

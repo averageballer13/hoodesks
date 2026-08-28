@@ -61,13 +61,16 @@ contract Hoodesks is ERC721, IERC2981, Ownable2Step, ReentrancyGuard {
     uint256 public constant MAX_SUPPLY = 5_000;
 
     /// @notice Charged by `mint`, on top of the burned deposit.
-    uint256 public constant SURCHARGE = 0.05 ether;
+    uint256 public constant SURCHARGE = 0.01 ether;
 
     /// @notice The protocol's only revenue: a tenth of the surcharge.
-    uint256 public constant PROTOCOL_CUT = 0.005 ether;
+    uint256 public constant PROTOCOL_CUT = 0.001 ether;
 
     /// @notice A round fires the moment the pot clears this.
-    uint256 public constant ROUND_THRESHOLD = 0.01 ether;
+    /// @dev A fifth of the surcharge, so one mint funds one round. Raising it
+    ///      makes rounds rarer and chunkier, which costs the keeper less gas
+    ///      per unit bought; lowering it makes them more frequent and smaller.
+    uint256 public constant ROUND_THRESHOLD = 0.002 ether;
 
     /// @notice Declared on the collection, paid to the pot, not to us.
     uint96 public constant ROYALTY_BPS = 500;

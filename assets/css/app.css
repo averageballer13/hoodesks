@@ -672,3 +672,31 @@ select.input { padding-right: 10px; cursor: pointer; }
 
 .grid2 { display: grid; gap: 10px; }
 @media (min-width: 640px) { .grid2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* -- pre-launch checklist -------------------------------------------------- */
+
+.todo {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: todo;
+}
+.todo li {
+  counter-increment: todo;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  padding: 7px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+.todo li:last-child { border-bottom: 0; }
+.todo li::before {
+  content: counter(todo, decimal-leading-zero);
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted-2);
+}

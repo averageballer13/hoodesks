@@ -71,22 +71,23 @@
         <!-- 02 -->
         <section class="frame" id="s2">
           <div class="frame__in">
-            <h2>Activating a desk</h2>
+            <h2>Claiming what you are owed</h2>
             <p>
-              A freshly minted desk earns nothing until you activate it. Press Activate on the
-              mint page or your profile, approve the transaction, and it is done once —
-              permanently.
+              A round credits your desk; it does not deliver to it. What was bought sits
+              with the protocol until somebody calls claim on that desk, which pays every
+              asset at once and deploys the desk's vault the first time it runs.
             </p>
             <p>
-              A desk's vault is a contract of its own, deployed at the address the NFT derives.
-              Deploying it does not fit in the same transaction as the mint, and it has to exist
-              before anything can be delivered into it. That is the only reason this is a second
-              step.
+              This is deliberate. A single round credits each desk a fraction of a cent,
+              and pushing that into five thousand vaults every round would cost far more
+              gas than it moves. Claiming once, for all ten assets, when it is worth
+              claiming, is the whole point. Anyone can trigger it for any desk — it only
+              ever helps the holder.
             </p>
             <p>
-              Nothing is lost by waiting. What a desk is owed is recorded from the moment it is
-              minted and keeps accruing whether its vault exists or not. Rounds skip it until it
-              does, then pay it in full.
+              Nothing is lost by waiting. What a desk is owed is recorded from the moment
+              it is minted and keeps accruing whether its vault exists or not. And if you
+              sell before claiming, the credit goes with the token.
             </p>
           </div>
         </section>

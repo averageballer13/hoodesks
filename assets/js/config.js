@@ -42,11 +42,11 @@ export const BRAND = {
 export const ECON = {
   supply: 5000,               // desks that can ever exist
   deposit: 1_000_000,         // burned per mint
-  surcharge: 0.05,            // ETH, charged by the mint instruction
-  surchargeToPot: 0.045,      // ETH
-  surchargeToProtocol: 0.005, // ETH
+  surcharge: 0.01,            // ETH, charged by the mint instruction
+  surchargeToPot: 0.009,      // ETH
+  surchargeToProtocol: 0.001, // ETH
   royaltyPct: 5,              // EIP-2981, declared on the collection
-  roundThreshold: 0.01,       // ETH — pot fires the moment it clears this
+  roundThreshold: 0.002,      // ETH — pot fires the moment it clears this
   activationGas: 0.0009,      // ETH, one-time vault deployment
   sweepMinutes: 2,            // Pons creator-fee sweep cadence
 };

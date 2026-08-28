@@ -46,7 +46,7 @@ console.log('MINT PHASE');
 console.log(`  ${SUPPLY} desks x ${TO_POT} ETH to the pot = ${totalRaised.toFixed(1)} ETH, once and never again`);
 console.log(`  each desk pays ${SURCHARGE} ETH + the burned deposit\n`);
 
-console.log('  serial   stock accrued   vs the 0.05 ETH surcharge');
+console.log(`  serial   stock accrued   vs the ${SURCHARGE} ETH surcharge`);
 console.log('  ------   -------------   ------------------------');
 for (const s of [1, 10, 100, 500, 1000, 2500, 4000, 5000]) {
   const eth = fromMints(s);

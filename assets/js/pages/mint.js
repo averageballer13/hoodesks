@@ -37,22 +37,33 @@ $('#mint-preview').replaceChildren(
 
 /* -- action --------------------------------------------------------------- */
 const btn = $('#mint-btn');
-if (s.launched) {
-  btn.textContent = 'Connect a wallet';
-  btn.disabled = false;
+const launch = api.launchStatus();
+
+btn.textContent = launch.label;
+btn.disabled = !launch.live;
+
+if (launch.live) {
   btn.addEventListener('click', () => {
     // Wallet flow goes here — see assets/js/data.js for the seam.
     btn.textContent = 'Wallet connector not wired yet';
     btn.disabled = true;
   });
-} else {
-  btn.textContent = 'Mint opens at launch';
 }
 
-$('#mint-note').textContent =
-  `${ECON.activationGas} ${CHAIN.currency} of gas to deploy the vault, once. ` +
-  `The ${fmt.int(ECON.deposit)} ${TOKEN.symbol} deposit is burned inside the mint call — ` +
-  `there is no version of this where a desk exists and the supply did not go down.`;
+$('#mint-note').textContent = launch.live
+  ? `The ${fmt.int(ECON.deposit)} ${TOKEN.symbol} deposit is burned inside the mint call — ` +
+    `there is no version of this where a desk exists and the supply did not go down.`
+  : launch.note;
+
+// Spell out what is left, rather than leaving a dead button with no reason.
+if (!launch.live) {
+  $('#mint-steps').replaceChildren(
+    el('div', { class: 'frame__head', style: 'margin:0 0 8px' },
+      el('h2', { class: 'frame__title' }, el('span', {}, 'Before it opens'))),
+    el('ol', { class: 'todo' },
+      ...launch.steps.map((t) => el('li', {}, t))),
+  );
+}
 
 /* -- your desks ----------------------------------------------------------- */
 {
@@ -76,12 +87,12 @@ const STEPS = [
   ['01', 'Mint',
    `The deposit is burned and an NFT is issued with a vault derived from it. ` +
    `Transferring the NFT transfers everything that vault holds.`],
-  ['02', 'Activate',
-   `The desk deploys its own vault contract. Until it exists there is nowhere ` +
-   `for a round to deliver to.`],
-  ['03', 'Earn',
-   `Each round buys the next asset and credits every active desk an equal ` +
-   `share, delivered into its own vault.`],
+  ['02', 'Earn',
+   `Every round buys the next asset and credits your desk an equal share. ` +
+   `This happens whether you do anything or not.`],
+  ['03', 'Claim',
+   `Pull everything owed into your desk's vault, all ten assets in one call. ` +
+   `Anyone can trigger it, and it deploys the vault the first time.`],
 ];
 
 $('#steps').replaceChildren(
