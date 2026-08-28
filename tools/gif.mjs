@@ -9,10 +9,16 @@
      node tools/gif.mjs --mode flip            # one desk, cycling fast
      node tools/gif.mjs --mode scroll          # a strip scrolling sideways
      node tools/gif.mjs --mode grid            # a wall of desks re-rolling
-     node tools/gif.mjs --mode flip --delay 3 --frames 90 --scale 8
+     node tools/gif.mjs --mode flip --delay 8 --end 60 --power 4
 
-   --delay is in hundredths of a second, the unit GIF itself uses. Anything
-   below 2 gets clamped to 10 by most browsers, so 3-5 is the fast end.
+   Frames do not run at a constant rate: each one holds a little longer than
+   the last, so the loop spins at speed and eases to a near-stop on its final
+   desk before snapping back. --delay is the opening hold, --end the closing
+   one, --power how abruptly it decelerates (1 is linear, higher stays fast
+   longer then drops off a cliff).
+
+   All three are in hundredths of a second, the unit GIF itself uses. Below 2
+   most browsers clamp to 10, so 3 is the practical floor.
    ========================================================================== */
 
 import { writeFile, mkdir } from 'node:fs/promises';
@@ -133,8 +139,19 @@ function subBlocks(data) {
 
 const u16 = (n) => Buffer.from([n & 0xff, (n >> 8) & 0xff]);
 
+/**
+ * Ease-out ramp of per-frame delays: `start` hundredths on the first frame,
+ * `end` on the last, `power` shaping how late the slowdown arrives.
+ */
+function delayRamp(n, start, end, power) {
+  return Array.from({ length: n }, (_, i) => {
+    const t = n < 2 ? 1 : i / (n - 1);
+    return Math.max(2, Math.round(start + (end - start) * Math.pow(t, power)));
+  });
+}
+
 /** Assemble frames (Uint8Array of palette indices, w*h) into a looping GIF89a. */
-function encodeGif(frames, w, h, delay) {
+function encodeGif(frames, w, h, delays) {
   const { buf: table, bits } = paletteBytes();
   const minCodeSize = Math.max(2, bits);
 
@@ -150,15 +167,15 @@ function encodeGif(frames, w, h, delay) {
     Buffer.from([0x03, 0x01]), u16(0), Buffer.from([0x00]),
   ];
 
-  for (const frame of frames) {
+  frames.forEach((frame, i) => {
     parts.push(
-      // graphic control: no disposal, no transparency, `delay` hundredths
-      Buffer.from([0x21, 0xf9, 0x04, 0x00]), u16(delay), Buffer.from([0x00, 0x00]),
+      // graphic control: no disposal, no transparency, this frame's own hold
+      Buffer.from([0x21, 0xf9, 0x04, 0x00]), u16(delays[i]), Buffer.from([0x00, 0x00]),
       Buffer.from([0x2c]), u16(0), u16(0), u16(w), u16(h), Buffer.from([0x00]),
       Buffer.from([minCodeSize]),
       subBlocks(lzwEncode(frame, minCodeSize)),
     );
-  }
+  });
 
   parts.push(Buffer.from([0x3b]));
   return Buffer.concat(parts);
@@ -217,7 +234,7 @@ const spread = (n, offset = 0) => {
 
 /* -- modes ---------------------------------------------------------------- */
 
-function flip({ frames = 72, scale = 8, pad = 16 }) {
+function flip({ frames = 40, scale = 8, pad = 16 }) {
   const tile = SIZE * scale;
   const w = tile + pad * 2, h = tile + pad * 2;
   const picks = spread(frames);
@@ -231,7 +248,7 @@ function flip({ frames = 72, scale = 8, pad = 16 }) {
   };
 }
 
-function scroll({ scale = 3, gap = 8, cells = 6, strip = 20, step = 26, pad = 8 }) {
+function scroll({ scale = 3, gap = 8, cells = 6, strip = 12, step = 26, pad = 8 }) {
   const tile = SIZE * scale;
   const cell = tile + gap;
   const total = strip * cell;
@@ -260,7 +277,7 @@ function scroll({ scale = 3, gap = 8, cells = 6, strip = 20, step = 26, pad = 8 
   return { w, h, frames };
 }
 
-function grid({ cols = 8, rows = 5, scale = 2, gap = 4, frames = 60, pad = 6 }) {
+function grid({ cols = 8, rows = 5, scale = 2, gap = 4, frames = 40, pad = 6 }) {
   const tile = SIZE * scale;
   const cell = tile + gap;
   const w = cols * cell - gap + pad * 2;
@@ -287,7 +304,9 @@ function grid({ cols = 8, rows = 5, scale = 2, gap = 4, frames = 60, pad = 6 }) 
 await mkdir(join(ROOT, 'brand'), { recursive: true });
 
 const MODES = { flip, scroll, grid };
-const delay = Number(arg('delay', 4));
+const startDelay = Number(arg('delay', 8));
+const endDelay = Number(arg('end', 60));
+const power = Number(arg('power', 4));
 const only = arg('mode', null);
 const overrides = {};
 for (const k of ['frames', 'scale', 'gap', 'cells', 'strip', 'step', 'cols', 'rows', 'pad']) {
@@ -299,12 +318,15 @@ for (const [name, fn] of Object.entries(MODES)) {
   if (only && only !== name) continue;
   const t0 = Date.now();
   const { w, h, frames } = fn(overrides);
-  const gif = encodeGif(frames, w, h, delay);
+  const delays = delayRamp(frames.length, startDelay, endDelay, power);
+  const gif = encodeGif(frames, w, h, delays);
+  const seconds = delays.reduce((a, b) => a + b, 0) / 100;
   const out = join(ROOT, 'brand', `hoodesks-${name}.gif`);
   await writeFile(out, gif);
   console.log(
     `hoodesks-${name}.gif  ${w}x${h}  ${frames.length} frames  ` +
-    `${delay * 10}ms  ${(gif.length / 1024).toFixed(0)} KB  ${Date.now() - t0}ms`,
+    `${delays[0] * 10}ms -> ${delays[delays.length - 1] * 10}ms  ` +
+    `${seconds.toFixed(1)}s loop  ${(gif.length / 1024).toFixed(0)} KB  ${Date.now() - t0}ms`,
   );
 }
 

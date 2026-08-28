@@ -141,18 +141,25 @@ of its pre-launch state.
 ### Animated GIFs
 
 ```bash
-node tools/gif.mjs                      # all three
-node tools/gif.mjs --mode flip --delay 3 --scale 10
+node tools/gif.mjs                                   # all three
+node tools/gif.mjs --mode flip --delay 8 --end 60 --power 4
 ```
 
-| File | Shape | Use |
-|---|---|---|
-| `brand/hoodesks-flip.gif` | 288x288, 72 frames | one desk cycling — PFP, teaser |
-| `brand/hoodesks-scroll.gif` | 624x112, 80 frames | a strip scrolling sideways — banner |
-| `brand/hoodesks-grid.gif` | 552x348, 60 frames | a wall of 40 desks re-rolling |
+| File | Shape | Loop | Use |
+|---|---|---|---|
+| `brand/hoodesks-flip.gif` | 288x288, 40 frames | 7.5s | one desk cycling — PFP, teaser |
+| `brand/hoodesks-scroll.gif` | 624x112, 48 frames | 9.0s | a strip scrolling sideways — banner |
+| `brand/hoodesks-grid.gif` | 552x348, 40 frames | 7.5s | a wall of 40 desks re-rolling |
 
-All loop forever at 25fps. `--delay` is in hundredths of a second, GIF's own
-unit; below 2 most browsers clamp to 10, so 3-5 is the fast end.
+Frames do not run at a constant rate. Each holds a little longer than the one
+before, so the loop spins at 80ms a frame, eases out, and rests 600ms on its
+final desk before snapping back — a reel coming to a stop rather than a
+flicker. `--delay` sets the opening hold, `--end` the closing one, and
+`--power` how late the slowdown arrives (1 is linear, 4 stays fast most of the
+way then drops off).
+
+All three are in hundredths of a second, GIF's own unit; below 2 most browsers
+clamp to 10, so 3 is the practical floor.
 
 The art uses 45 flat colours, so the whole palette fits one global colour
 table and the output is colour-exact — no quantisation, no dithering. The
