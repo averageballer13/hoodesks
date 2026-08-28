@@ -128,7 +128,7 @@ main { flex: 1 1 auto; padding-top: 24px; }
 .tape__item {
   display: flex;
   flex-shrink: 0;
-  align-items: baseline;
+  align-items: center;
   gap: 7px;
   white-space: nowrap;
   padding: 0 15px;
@@ -142,6 +142,26 @@ main { flex: 1 1 auto; padding-top: 24px; }
 
 @keyframes tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .tape__row { animation: none; } }
+
+/* -- token mark ----------------------------------------------------------
+   Each logo file is the company's own tile with its own background, so the
+   chip crops rather than pads. The white ground only shows through for the
+   marks that ship transparent, which keeps dark logos legible on black.
+   ------------------------------------------------------------------------ */
+
+.tlogo {
+  display: block;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: #fff;
+  object-fit: cover;
+  height: 16px;
+  width: 16px;
+}
+.tlogo--xs { height: 13px; width: 13px; }
+.tlogo--sm { height: 15px; width: 15px; }
+.tlogo--md { height: 20px; width: 20px; }
+.tlogo--lg { height: 26px; width: 26px; }
 
 /* -- frame (the double-bordered card) ------------------------------------- */
 
@@ -295,6 +315,8 @@ main { flex: 1 1 auto; padding-top: 24px; }
   font-size: 13px; font-weight: 700; line-height: 1;
   font-variant-numeric: tabular-nums;
 }
+.stat__v--mark { display: flex; align-items: center; gap: 5px; }
+.stat__v--mark > span { overflow: hidden; text-overflow: ellipsis; }
 .stat__v.is-brand { color: var(--brand); }
 .stat__v.is-gold  { color: var(--gold); }
 .stat__v.is-head  { color: var(--head); }
@@ -321,6 +343,7 @@ main { flex: 1 1 auto; padding-top: 24px; }
   margin-top: 6px; font-size: 21px; font-weight: 700; line-height: 1.15;
   font-variant-numeric: tabular-nums; color: var(--brand);
 }
+.statcard__v--mark { display: flex; align-items: center; gap: 7px; }
 .statcard__s { margin-top: 3px; font-size: 10.5px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
 
 /* -- desk tiles ----------------------------------------------------------- */
@@ -531,9 +554,10 @@ table.t .em { font-weight: 600; }
 
 .chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .chip {
+  display: inline-flex; align-items: center; gap: 6px;
   border: 1px solid var(--line); border-radius: 7px;
   background: var(--well);
-  padding: 5px 9px;
+  padding: 4px 9px;
   font-size: 11px; font-weight: 600; font-family: var(--font-mono);
   color: var(--muted);
 }

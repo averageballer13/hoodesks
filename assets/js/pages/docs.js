@@ -1,7 +1,7 @@
 /* HOODESKS — docs: value injection, table building, TOC scrollspy */
 
 import { ACCOUNTS, CHAIN, ECON, ROTATION, TOKEN, fmt } from '../config.js';
-import { boot, el, $, $$ } from '../ui.js';
+import { boot, el, $, $$, tokenMark } from '../ui.js';
 
 boot('docs.html');
 
@@ -31,7 +31,9 @@ for (const node of $$('[data-v]')) {
 /* -- rotation chips ------------------------------------------------------- */
 $('#rotation').replaceChildren(...ROTATION.map((a) =>
   el('span', { class: 'chip', title: a.name },
-    el('span', { class: 'i' }, String(a.i).padStart(2, '0')), ' ', a.sym)));
+    el('span', { class: 'i' }, String(a.i).padStart(2, '0')),
+    tokenMark(a.sym, 'xs'),
+    a.sym)));
 
 /* -- the numbers table ---------------------------------------------------- */
 const NUMBERS = [
@@ -51,9 +53,12 @@ $('#numbers').replaceChildren(...NUMBERS.map(([k, v]) =>
   el('tr', {}, el('td', { class: 'em' }, k), el('td', {}, v))));
 
 /* -- accounts ------------------------------------------------------------- */
-const addrRow = (label, addr, href, lead) =>
+const addrRow = (label, addr, href, lead, sym) =>
   el('div', { class: 'kv' },
-    el('span', { class: 'kv__k' }, lead != null ? `${lead}  ${label}` : label),
+    el('span', { class: 'kv__k', style: 'display:flex;align-items:center;gap:7px' },
+      lead != null ? el('span', { class: 'dim' }, lead) : null,
+      sym ? tokenMark(sym, 'sm') : null,
+      el('span', {}, label)),
     el('a', {
       class: 'addr', href, target: '_blank', rel: 'noreferrer', title: addr,
     }, fmt.addr(addr)));
@@ -64,7 +69,7 @@ $('#accounts').replaceChildren(...ACCOUNTS.map((a) =>
 // Stock tokens link to their token page rather than the plain account view.
 $('#assets').replaceChildren(...ROTATION.map((a) =>
   addrRow(`${a.sym} · ${a.name}`, a.addr, CHAIN.explorerToken(a.addr),
-    String(a.i).padStart(2, '0'))));
+    String(a.i).padStart(2, '0'), a.sym)));
 
 /* -- table of contents + scrollspy ---------------------------------------- */
 const sections = $$('.doc section[id]');

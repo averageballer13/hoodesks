@@ -3,7 +3,7 @@
 import { BRAND, ECON, TOKEN, fmt } from '../config.js';
 import { collection } from '../data.js';
 import * as api from '../data.js';
-import { boot, el, $, deskCanvas, makePager } from '../ui.js';
+import { boot, el, $, deskCanvas, makePager, tokenMark } from '../ui.js';
 
 boot('index.html');
 
@@ -35,7 +35,7 @@ $('#hero-lede').textContent = BRAND.tagline;
     { k: 'Minted', v: `${fmt.int(s.minted)} / ${fmt.int(s.supply)}`, tone: '' },
     { k: 'Live desks', v: fmt.int(s.liveDesks), tone: '' },
     { k: `${TOKEN.symbol} burned`, v: fmt.int(s.burned), tone: 'is-brand' },
-    { k: 'Buys next', v: s.buysNext, tone: 'is-gold' },
+    { k: 'Buys next', v: s.buysNext, tone: 'is-gold', mark: s.buysNext },
     { k: 'Paid to holders', v: fmt.usd(s.paidToHolders), tone: 'is-head' },
   ];
 
@@ -44,7 +44,9 @@ $('#hero-lede').textContent = BRAND.tagline;
     ...cells.map((c) =>
       el('div', { class: 'stat' },
         el('div', { class: 'stat__k' }, c.k),
-        el('div', { class: `stat__v ${c.tone}` }, c.v))),
+        el('div', { class: `stat__v ${c.tone}${c.mark ? ' stat__v--mark' : ''}` },
+          c.mark ? tokenMark(c.mark, 'xs') : null,
+          el('span', {}, c.v)))),
   );
 }
 

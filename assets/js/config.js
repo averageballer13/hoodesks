@@ -93,6 +93,13 @@ export const TOKEN = {
   pons: 'https://pons.xyz',
 };
 
+/**
+ * Brand mark for a stock token, served from this repo rather than hotlinked.
+ * Each file is the company's own tile, background included, so it sits on
+ * either theme without help. Refresh them with `node tools/logos.mjs`.
+ */
+export const tokenLogo = (sym) => `assets/img/tokens/${sym}.png`;
+
 /* --- formatting helpers -------------------------------------------------- */
 export const fmt = {
   int: (n) => Number(n).toLocaleString('en-US'),

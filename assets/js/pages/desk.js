@@ -4,7 +4,7 @@ import { BRAND, CHAIN, ECON, fmt } from '../config.js';
 import * as api from '../data.js';
 import { collection, deskById } from '../data.js';
 import { LAYER_NAMES, traitLine } from '../desks.js';
-import { boot, el, $, deskCanvas } from '../ui.js';
+import { boot, el, $, deskCanvas, tokenMark } from '../ui.js';
 
 boot('collection.html');
 
@@ -95,8 +95,11 @@ function render() {
             el('th', {}, 'Asset'), el('th', { class: 'r' }, 'Units'), el('th', { class: 'r' }, 'Value'))),
           el('tbody', {}, ...rows.map((r) =>
             el('tr', {},
-              el('td', {}, el('span', { class: 'em' }, r.sym),
-                el('span', { class: 'dim', style: 'margin-left:8px;font-size:11px' }, r.name)),
+              el('td', {},
+                el('span', { style: 'display:flex;align-items:center;gap:8px' },
+                  tokenMark(r.sym, 'sm'),
+                  el('span', { class: 'em' }, r.sym),
+                  el('span', { class: 'dim', style: 'font-size:11px' }, r.name))),
               el('td', { class: 'r' }, r.units.toFixed(4)),
               el('td', { class: 'r' }, fmt.usd(r.value))))))),
       el('p', { class: 'frame__cap' },

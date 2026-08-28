@@ -3,7 +3,7 @@
    Header, ticker tape, footer, theme toggle, and small render helpers.
    ========================================================================== */
 
-import { BRAND, CHAIN, ROTATION, ECON, fmt } from './config.js';
+import { BRAND, CHAIN, ROTATION, ECON, fmt, tokenLogo } from './config.js';
 import { drawDesk, SIZE } from './desks.js';
 
 /* -- dom helpers ---------------------------------------------------------- */
@@ -25,6 +25,24 @@ export function el(tag, attrs = {}, ...kids) {
     node.append(kid instanceof Node ? kid : document.createTextNode(String(kid)));
   }
   return node;
+}
+
+/**
+ * The brand mark for a stock token. `size` is one of xs / sm / md / lg, or
+ * empty for the 16px default. Decorative — the ticker beside it carries the
+ * meaning, so it stays out of the accessibility tree.
+ */
+export function tokenMark(sym, size = '') {
+  return el('img', {
+    class: `tlogo${size ? ` tlogo--${size}` : ''}`,
+    src: tokenLogo(sym),
+    alt: '',
+    'aria-hidden': true,
+    // Not lazy: these live in the ticker tape, which is masked and off-viewport
+    // enough that a lazy loader never gets round to them. Ten small files that
+    // the browser caches by URL, so eager costs nothing.
+    decoding: 'async',
+  });
 }
 
 /** A 32x32 canvas painted with a desk. Size it with CSS. */
@@ -130,6 +148,7 @@ export function mountTape() {
     const { px, chg } = quoteFor(s.sym, i);
     const up = chg >= 0;
     return el('span', { class: 'tape__item', title: s.name },
+      tokenMark(s.sym, 'sm'),
       el('span', { class: 'tape__sym' }, s.sym),
       el('span', { class: 'tape__px' }, px.toFixed(2)),
       el('span', { class: `tape__chg ${up ? 'up' : 'down'}` }, `${up ? '+' : ''}${chg.toFixed(2)}%`));

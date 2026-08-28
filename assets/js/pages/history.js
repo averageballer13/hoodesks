@@ -2,7 +2,7 @@
 
 import { CHAIN, ROTATION, fmt } from '../config.js';
 import * as api from '../data.js';
-import { boot, el, $, makePager } from '../ui.js';
+import { boot, el, $, makePager, tokenMark } from '../ui.js';
 
 boot('history.html');
 
@@ -17,12 +17,14 @@ const items = api.rounds();
     { k: 'Rounds', v: fmt.int(s.rounds) },
     { k: `${CHAIN.currency} converted`, v: s.converted.toFixed(3) },
     { k: 'Assets bought', v: fmt.int(new Set(items.map((r) => r.sym)).size) },
-    { k: 'Buys next', v: s.buysNext, sub: last ? `last: ${last.sym}` : 'rotation head' },
+    { k: 'Buys next', v: s.buysNext, mark: s.buysNext, sub: last ? `last: ${last.sym}` : 'rotation head' },
   ];
   $('#summary').replaceChildren(...cards.map((c) =>
     el('div', { class: 'statcard' },
       el('div', { class: 'statcard__k' }, c.k),
-      el('div', { class: 'statcard__v' }, c.v),
+      el('div', { class: `statcard__v${c.mark ? ' statcard__v--mark' : ''}` },
+        c.mark ? tokenMark(c.mark, 'md') : null,
+        el('span', {}, c.v)),
       c.sub ? el('div', { class: 'statcard__s' }, c.sub) : null)));
 }
 
@@ -48,6 +50,7 @@ function render() {
     rowsHost.replaceChildren(...slice.map((r) =>
       el('div', { class: 'row' },
         el('span', { class: 'row__n' }, fmt.int(r.n)),
+        tokenMark(r.sym, 'md'),
         el('span', { class: 'row__main' },
           el('span', { class: 'row__t' }, r.sym),
           el('span', { class: 'row__s' },
@@ -63,5 +66,5 @@ render();
 $('#rotation').replaceChildren(...ROTATION.map((a) =>
   el('span', { class: 'chip', title: a.name },
     el('span', { class: 'i' }, String(a.i).padStart(2, '0')),
-    ' ',
+    tokenMark(a.sym, 'xs'),
     a.sym)));

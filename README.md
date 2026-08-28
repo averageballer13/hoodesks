@@ -89,6 +89,25 @@ node tools/sheet.mjs --from 1 --count 64        # the first serials
 
 One PNG with many desks on it, for a reveal post.
 
+### Stock token logos
+
+Every ticker in the UI carries its company's brand mark, served from
+`assets/img/tokens/` so the site never depends on an image host at runtime.
+
+```bash
+node tools/logos.mjs           # fetch anything missing
+node tools/logos.mjs --force   # re-fetch everything
+```
+
+Change the rotation in `config.js` and re-run it; anything it cannot find is
+reported, and you can drop a square PNG at `assets/img/tokens/<SYM>.png` by
+hand instead.
+
+Robinhood's own CDN is not the source: `cdn.robinhood.com/ncw_assets/logos/`
+returns the same generic feather for every stock token, so the marks come from
+a public ticker-keyed host. They are used to identify the stock they belong to
+— the same nominative use every broker makes of them.
+
 ---
 
 ## Going live
