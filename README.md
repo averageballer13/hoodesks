@@ -138,6 +138,26 @@ myDesks()        // { connected, desks }
 Flip `LAUNCHED` and `MINTED` at the top of `data.js` to move the whole site out
 of its pre-launch state.
 
+### Animated GIFs
+
+```bash
+node tools/gif.mjs                      # all three
+node tools/gif.mjs --mode flip --delay 3 --scale 10
+```
+
+| File | Shape | Use |
+|---|---|---|
+| `brand/hoodesks-flip.gif` | 288x288, 72 frames | one desk cycling — PFP, teaser |
+| `brand/hoodesks-scroll.gif` | 624x112, 80 frames | a strip scrolling sideways — banner |
+| `brand/hoodesks-grid.gif` | 552x348, 60 frames | a wall of 40 desks re-rolling |
+
+All loop forever at 25fps. `--delay` is in hundredths of a second, GIF's own
+unit; below 2 most browsers clamp to 10, so 3-5 is the fast end.
+
+The art uses 45 flat colours, so the whole palette fits one global colour
+table and the output is colour-exact — no quantisation, no dithering. The
+encoder (GIF89a + LZW) is written into the tool on top of nothing at all.
+
 ---
 
 ## Brand
