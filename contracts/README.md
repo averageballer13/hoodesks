@@ -55,26 +55,59 @@ as the core.
 `fireRound(minAmountOut)` takes its slippage floor from the caller because the
 contract has no oracle. A keeper passing zero is inviting a sandwich.
 
+## The network
+
+From [docs.robinhood.com/chain/connecting](https://docs.robinhood.com/chain/connecting).
+Robinhood Chain is an Arbitrum L2 with ETH as the gas token.
+
+|                | Mainnet | Testnet |
+|---|---|---|
+| Chain ID       | `4663` | `46630` |
+| Public RPC     | `https://rpc.mainnet.chain.robinhood.com` | `https://rpc.testnet.chain.robinhood.com` |
+| Explorer       | robinhoodchain.blockscout.com | explorer.testnet.chain.robinhood.com |
+
+Both are wired up in `hardhat.config.cjs` as `robinhood` and
+`robinhoodTestnet`. The public RPCs are rate-limited; set `RPC_URL` to an
+Alchemy or QuickNode endpoint for anything heavier than a deploy.
+
 ## Deploying
 
+Copy `.env.example`, or export the values in the shell so the key never
+touches disk:
+
 ```bash
-export RPC_URL=...            # Robinhood Chain
-export DEPLOYER_KEY=...       # never commit this
-export DEPOSIT_TOKEN=0x...    # the launch token, from Pons
+export DEPLOYER_KEY=...        # never commit, never paste anywhere
 export PROTOCOL_WALLET=0xa0A502e18D8EC97FF64338741b3296e65147002f
 export BASE_URI=ipfs://<cid>/
+```
 
+**Rehearse on the testnet first.** The Robinhood Stock Tokens do not exist
+there, so the script deploys mock ERC-20s and a mock venue, then mints a desk,
+fires a round and claims it — proving the whole cycle against a real chain
+before any of it costs anything:
+
+```bash
+npx hardhat run scripts/deploy.cjs --network robinhoodTestnet
+```
+
+Then the real thing. `DEPOSIT_TOKEN` is the launch token from Pons, which has
+to exist first — the constructor takes its address:
+
+```bash
+export DEPOSIT_TOKEN=0x...
 npx hardhat run scripts/deploy.cjs --network robinhood
 ```
 
-The script refuses to deploy if any rotation address has no code on the target
-network, and prints a block to paste into `../assets/js/config.js`.
+On mainnet the script refuses to continue if the deposit token or any rotation
+address has no code on the network, and prints a block to paste into
+`../assets/js/config.js`.
 
 Then, in order:
 
 1. deploy a swap adapter and call `setSwapAdapter`
 2. repoint the Pons creator-fee recipient at the collection
-3. run a keeper: claim Pons fees into the pot, then `fireRound(minAmountOut)`
+3. transfer ownership to a multisig — `Ownable2Step`, so propose then accept
+4. flip `LAUNCHED` in `../assets/js/data.js`
 
 ## Before this touches real money
 
