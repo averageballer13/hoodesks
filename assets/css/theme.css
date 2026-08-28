@@ -1,0 +1,103 @@
+/* ==========================================================================
+   HOODESKS — design tokens
+   --------------------------------------------------------------------------
+   Robinhood palette. Dark is the default and the one the brand is built on:
+   true black, one electric green, one acid lime, red only for losses.
+   Light is a full inversion, not a tint.
+   ========================================================================== */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --paper: #000000;
+  --paper-2: #0c0e11;
+  --paper-3: #14171b;
+  --well: #17191d;
+  --well-2: #090a0c;
+
+  --ink: #ffffff;
+  --ink-2: #e6e9ec;
+  --muted: #8e959d;
+  --muted-2: #5f666e;
+  --chrome: #c9ced3;
+
+  --line: #1e2126;
+  --line-2: #262a30;
+  --frame: #2c3138;
+
+  /* Robinhood green — gains, primary action, "live" */
+  --brand: #00c805;
+  --brand-lit: #22e528;
+  --brand-dim: #0a6b10;
+  --brand-ghost: #00c8051f;
+
+  /* acid lime — the marketing accent */
+  --head: #ccff00;
+  --head-lit: #dcff44;
+  --head-ink: #0b0c08;
+
+  --phos: #00c805;
+  --phos-dim: #4b7a51;
+
+  --gold: #ffd426;
+  --alert: #ff5000;
+
+  --pop: 0 24px 64px rgb(0 0 0 / 0.72);
+  --grain: rgb(255 255 255 / 0.035);
+  --glow: 0 0 0 1px var(--brand-ghost), 0 0 22px -6px var(--brand);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --paper: #ffffff;
+  --paper-2: #f7f8f9;
+  --paper-3: #eef0f2;
+  --well: #f1f3f5;
+  --well-2: #e9ecef;
+
+  --ink: #0b0c0e;
+  --ink-2: #1c1f23;
+  --muted: #5f6771;
+  --muted-2: #868d95;
+  --chrome: #2b2f35;
+
+  --line: #e4e7eb;
+  --line-2: #d8dce1;
+  --frame: #cdd2d8;
+
+  --brand: #00a804;
+  --brand-lit: #009303;
+  --brand-dim: #b7ecb9;
+  --brand-ghost: #00a8041a;
+
+  --head: #0b0c0e;
+  --head-lit: #000000;
+  --head-ink: #ccff00;
+
+  --phos: #00a804;
+  --phos-dim: #6d8f70;
+
+  --gold: #a97c00;
+  --alert: #e03e00;
+
+  --pop: 0 12px 32px rgb(11 12 14 / 0.09), 0 2px 6px rgb(11 12 14 / 0.06);
+  --grain: rgb(11 12 14 / 0.03);
+  --glow: 0 0 0 1px var(--brand-ghost);
+}
+
+:root {
+  --col: 720px;
+  --col-wide: 1120px;
+  --header-h: 60px;
+  --radius: 14px;
+  --radius-in: 10px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Mono',
+    'Segoe UI Mono', Menlo, Consolas, monospace;
+
+  --t: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}

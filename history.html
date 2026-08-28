@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>History · HOODESKS</title>
+<meta name="description" content="Every round settled: what the pot bought, and how it was split.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('hoodesks-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+</head>
+<body>
+<div class="shell">
+  <header id="hdr" class="hdr"></header>
+  <div id="tape" class="tape"></div>
+
+  <main class="stack">
+    <section class="frame ptitle">
+      <div class="frame__in">
+        <h1>Every round settled<span class="cursor" aria-hidden="true"></span></h1>
+        <p>
+          A round happens the moment the pot clears its threshold. It is spent in full
+          on the next asset in the rotation, and what it bought is split equally across
+          every live desk.
+        </p>
+      </div>
+    </section>
+
+    <section class="statgrid" id="summary"></section>
+
+    <section class="frame">
+      <div class="frame__in frame__in--flush">
+        <div id="rows"></div>
+        <div id="pager"></div>
+      </div>
+    </section>
+
+    <section class="frame">
+      <div class="frame__in">
+        <div class="frame__head">
+          <h2 class="frame__title"><span>The rotation</span></h2>
+        </div>
+        <div class="chips" id="rotation"></div>
+        <p class="frame__cap">
+          Ten tokenised assets, taken in order. A round never splits its spend across
+          two of them — the whole pot goes into whichever is next.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="ftr"></footer>
+</div>
+<script type="module" src="assets/js/pages/history.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changelog · HOODESKS</title>
+<meta name="description" content="What changed, and when.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('hoodesks-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+</head>
+<body>
+<div class="shell">
+  <header id="hdr" class="hdr"></header>
+  <div id="tape" class="tape"></div>
+
+  <main class="stack">
+    <section class="frame ptitle">
+      <div class="frame__in">
+        <h1>What changed, and when<span class="cursor" aria-hidden="true"></span></h1>
+        <p>Change logs and announcements, newest first.</p>
+      </div>
+    </section>
+    <section class="stack" id="entries"></section>
+  </main>
+
+  <footer id="ftr"></footer>
+</div>
+<script type="module" src="assets/js/pages/changelog.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collection · HOODESKS</title>
+<meta name="description" content="All 5,000 desks. Eight trait layers, generated from a fixed seed and reproducible anywhere.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('hoodesks-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+</head>
+<body>
+<div class="shell shell--wide">
+  <header id="hdr" class="hdr"></header>
+  <div id="tape" class="tape"></div>
+
+  <main class="stack">
+
+    <section class="frame ptitle">
+      <div class="frame__in">
+        <h1>The collection<span class="cursor" aria-hidden="true"></span></h1>
+        <p id="col-lede"></p>
+      </div>
+    </section>
+
+    <div class="col">
+
+      <aside class="filters">
+        <div class="frame">
+          <div class="frame__in">
+            <div class="frame__head" style="margin-bottom:8px">
+              <h2 class="frame__title"><span>Traits</span></h2>
+              <button class="btn btn--ghost btn--sm" id="clear" type="button" style="height:26px;padding:0 10px">Clear</button>
+            </div>
+            <div id="filters"></div>
+          </div>
+        </div>
+      </aside>
+
+      <section>
+        <div class="toolbar">
+          <input class="input" id="q" type="search" placeholder="Search #id" inputmode="numeric" style="width:130px">
+          <select class="input" id="sort">
+            <option value="id">Serial ↑</option>
+            <option value="id-desc">Serial ↓</option>
+            <option value="rare">Rarest first</option>
+            <option value="common">Most common first</option>
+          </select>
+          <span class="pill" id="count">—</span>
+        </div>
+
+        <div class="frame">
+          <div class="frame__in">
+            <div class="colgrid" id="grid"></div>
+            <div id="pager"></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer id="ftr"></footer>
+</div>
+<script type="module" src="assets/js/pages/collection.js"></script>
+</body>
+</html>

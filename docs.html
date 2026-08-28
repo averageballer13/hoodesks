@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Docs · HOODESKS</title>
+<meta name="description" content="How a desk works: what you get, what a round does, where the money comes from, and what happens when you sell.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('hoodesks-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+</head>
+<body>
+<div class="shell">
+  <header id="hdr" class="hdr"></header>
+  <div id="tape" class="tape"></div>
+
+  <main class="stack">
+
+    <section class="frame ptitle">
+      <div class="frame__in">
+        <h1>How a desk works<span class="cursor" aria-hidden="true"></span></h1>
+        <p>
+          A desk is an NFT that owns a vault. The vault fills with tokenised stock over
+          time, and whoever holds the NFT owns whatever is in it.
+        </p>
+      </div>
+    </section>
+
+    <div class="docs">
+      <nav class="toc" aria-label="Contents"><ol id="toc"></ol></nav>
+
+      <div class="doc stack">
+
+        <!-- 01 -->
+        <section class="frame" id="s1">
+          <div class="frame__in">
+            <h2>What you get</h2>
+            <p>
+              Minting burns <b data-v="deposit"></b> <span data-v="ticker"></span> and issues
+              an ERC-721 with a vault address derived from it. The burn happens inside the mint
+              call, before the NFT exists — the transaction either does both or neither, so
+              there is no version of this where somebody gets a desk without the supply going
+              down.
+            </p>
+            <p>
+              The vault is what makes it a desk rather than a picture. It holds real tokenised
+              stock, it is owned by the NFT rather than by you, and it travels with the NFT
+              when you sell.
+            </p>
+            <div class="tw" style="margin-top:14px">
+              <table class="t">
+                <thead><tr><th>You pay</th><th>Amount</th><th>Where it goes</th></tr></thead>
+                <tbody>
+                  <tr><td class="em">Deposit</td><td class="r"><span data-v="deposit"></span> <span data-v="ticker"></span></td><td>Burned</td></tr>
+                  <tr><td class="em">Surcharge</td><td class="r"><span data-v="surcharge"></span></td><td><span data-v="toPot"></span> pot · <span data-v="toProtocol"></span> protocol</td></tr>
+                  <tr><td class="em">Vault gas</td><td class="r">~<span data-v="gas"></span></td><td>Network · paid once</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 02 -->
+        <section class="frame" id="s2">
+          <div class="frame__in">
+            <h2>Activating a desk</h2>
+            <p>
+              A freshly minted desk earns nothing until you activate it. Press Activate on the
+              mint page or your profile, approve the transaction, and it is done once —
+              permanently.
+            </p>
+            <p>
+              A desk's vault is a contract of its own, deployed at the address the NFT derives.
+              Deploying it does not fit in the same transaction as the mint, and it has to exist
+              before anything can be delivered into it. That is the only reason this is a second
+              step.
+            </p>
+            <p>
+              Nothing is lost by waiting. What a desk is owed is recorded from the moment it is
+              minted and keeps accruing whether its vault exists or not. Rounds skip it until it
+              does, then pay it in full.
+            </p>
+          </div>
+        </section>
+
+        <!-- 03 -->
+        <section class="frame" id="s3">
+          <div class="frame__in">
+            <h2>What a round does</h2>
+            <p>
+              The moment the pot clears <b data-v="threshold"></b> it is spent — all of it — on
+              whichever asset is next in the rotation. What it bought is split equally across
+              every live desk. Not proportionally, not weighted by how long you have held: one
+              desk, one share.
+            </p>
+            <p>
+              A round is one transaction however many desks exist, because it writes a single
+              number rather than paying five thousand vaults. Your share is the difference
+              between that number and where your desk last stood — counter minus stamp.
+              Delivering it into the vaults happens afterwards, one transaction per desk, and
+              anybody can trigger it.
+            </p>
+            <div class="chips" style="margin-top:14px" id="rotation"></div>
+          </div>
+        </section>
+
+        <!-- 04 -->
+        <section class="frame" id="s4">
+          <div class="frame__in">
+            <h2>Where the money comes from</h2>
+            <p>
+              Everything the protocol spends passes through one account — the pot. Three things
+              fill it.
+            </p>
+            <div class="tw" style="margin-top:14px">
+              <table class="t">
+                <thead><tr><th>Source</th><th>Amount</th><th>To the pot</th></tr></thead>
+                <tbody>
+                  <tr><td class="em">Mint</td><td><span data-v="surcharge"></span> surcharge</td><td class="em"><span data-v="toPot"></span></td></tr>
+                  <tr><td class="em">Sale on a marketplace</td><td><span data-v="royalty"></span> royalty</td><td class="em">Full</td></tr>
+                  <tr><td class="em"><span data-v="ticker"></span> traded on <span data-v="launchpad"></span></td><td>Creator fees</td><td class="em">Full · swept every <span data-v="sweep"></span> min</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The <span data-v="deposit"></span> <span data-v="ticker"></span> deposit funds none
+              of this. It is destroyed, it goes nowhere, and nobody receives it. Total supply is
+              permanently smaller every time a desk is issued, and you can watch the number fall
+              on the front page.
+            </p>
+            <p>
+              Two of the three keep working after the last serial is minted, which is what stops
+              a sold-out supply ending the rounds.
+            </p>
+          </div>
+        </section>
+
+        <!-- 05 -->
+        <section class="frame" id="s5">
+          <div class="frame__in">
+            <h2>What we take</h2>
+            <p>
+              <b data-v="toProtocol"></b> per mint — a tenth of the <span data-v="surcharge"></span>
+              surcharge, taken by the mint call. That is the only function in the contract that
+              pays the protocol wallet, and there is no second source of revenue.
+            </p>
+            <div class="tw" style="margin-top:14px">
+              <table class="t">
+                <thead><tr><th>Event</th><th>Protocol</th><th>Pot</th></tr></thead>
+                <tbody>
+                  <tr><td class="em">Mint surcharge</td><td><span data-v="toProtocol"></span></td><td><span data-v="toPot"></span></td></tr>
+                  <tr><td class="em">Deposit</td><td>—</td><td>— · burned</td></tr>
+                  <tr><td class="em">Royalty on a sale</td><td>—</td><td>Full</td></tr>
+                  <tr><td class="em">Creator fees</td><td>—</td><td>Full</td></tr>
+                  <tr><td class="em">Selling a desk</td><td>—</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="q">
+              None of what the pot receives is a promise. If nobody mints and the token stops
+              trading, the pot stops filling and rounds stop firing. Nothing you already hold is
+              affected — the stock is in your desk and you can pull it out yourself — it simply
+              stops growing.
+            </p>
+          </div>
+        </section>
+
+        <!-- 06 -->
+        <section class="frame" id="s6">
+          <div class="frame__in">
+            <h2>Selling a desk</h2>
+            <p>
+              Selling a desk is selling the NFT. The vault is derived from the NFT and every
+              function checks ownership against it, so transferring the token transfers
+              everything the desk owns — its vault, its stock, and anything a round has credited
+              but not yet delivered. There is nothing to withdraw first and nothing that gets
+              left behind.
+            </p>
+            <p>
+              Which also means it never stops working. A listed desk is still live, still
+              counted, and still paid by every round while it sits on the market; whoever buys
+              it picks it up mid-flight with everything on it, rather than starting from zero.
+            </p>
+            <p>
+              In practice that means listing it like any other NFT on the chain. The protocol
+              takes nothing from the sale. The collection does carry a <span data-v="royalty"></span>
+              royalty and it goes to the pot rather than to us — but it is declared on the
+              collection rather than enforced by the contract, so a marketplace that honours
+              EIP-2981 pays it and a hand-typed wallet-to-wallet transfer does not.
+            </p>
+          </div>
+        </section>
+
+        <!-- 07 -->
+        <section class="frame" id="s7">
+          <div class="frame__in">
+            <h2>The numbers</h2>
+            <div class="tw">
+              <table class="t">
+                <thead><tr><th>Setting</th><th>Value</th></tr></thead>
+                <tbody id="numbers"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 08 -->
+        <section class="frame" id="s8">
+          <div class="frame__in">
+            <h2>The accounts</h2>
+            <div id="accounts" class="stack-sm" style="margin-top:12px"></div>
+            <div class="frame__head" style="margin:20px 0 10px">
+              <h2 class="frame__title"><span>Assets in rotation</span></h2>
+            </div>
+            <div id="assets"></div>
+            <p class="frame__cap">
+              The pot and the config are deterministic addresses, derived from a salt rather
+              than owned by anyone. The rest is read off the config contract, so nothing here
+              can drift from what is deployed.
+            </p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer id="ftr"></footer>
+</div>
+<script type="module" src="assets/js/pages/docs.js"></script>
+</body>
+</html>
