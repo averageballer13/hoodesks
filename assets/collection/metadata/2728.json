@@ -1,0 +1,46 @@
+{
+  "name": "HOODESK #2728",
+  "description": "A desk that owns a vault. The vault fills with tokenised stock round after round, and whoever holds this token owns whatever is in it.",
+  "image": "ipfs://REPLACE_WITH_CID/2728.png",
+  "external_url": "https://hoodesks.fun/desk.html?id=2728",
+  "attributes": [
+    {
+      "trait_type": "Field",
+      "value": "Slate"
+    },
+    {
+      "trait_type": "Case",
+      "value": "Salmon"
+    },
+    {
+      "trait_type": "Bezel",
+      "value": "Recessed"
+    },
+    {
+      "trait_type": "Tube",
+      "value": "Green phosphor"
+    },
+    {
+      "trait_type": "Screen",
+      "value": "Rising"
+    },
+    {
+      "trait_type": "Keys",
+      "value": "Full stroke"
+    },
+    {
+      "trait_type": "Lamp",
+      "value": "Live"
+    },
+    {
+      "trait_type": "Plate",
+      "value": "Plated"
+    },
+    {
+      "trait_type": "Rarity rank",
+      "value": 4721,
+      "display_type": "number",
+      "max_value": 5000
+    }
+  ]
+}

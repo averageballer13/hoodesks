@@ -68,7 +68,7 @@ node tools/export.mjs --limit 20      # a sample to eyeball first
 node tools/export.mjs --size 1024 --base ipfs://<cid>
 ```
 
-Writes to `assets/collection/` (gitignored):
+Writes to `assets/collection/`, which is committed to this repo:
 
 ```
 images/<id>.png        512×512 nearest-neighbour, transparent background

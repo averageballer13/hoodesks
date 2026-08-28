@@ -1,0 +1,46 @@
+{
+  "name": "HOODESK #42",
+  "description": "A desk that owns a vault. The vault fills with tokenised stock round after round, and whoever holds this token owns whatever is in it.",
+  "image": "ipfs://REPLACE_WITH_CID/42.png",
+  "external_url": "https://hoodesks.fun/desk.html?id=42",
+  "attributes": [
+    {
+      "trait_type": "Field",
+      "value": "Rose"
+    },
+    {
+      "trait_type": "Case",
+      "value": "Office beige"
+    },
+    {
+      "trait_type": "Bezel",
+      "value": "Blackout"
+    },
+    {
+      "trait_type": "Tube",
+      "value": "Paper white"
+    },
+    {
+      "trait_type": "Screen",
+      "value": "Rising"
+    },
+    {
+      "trait_type": "Keys",
+      "value": "Short deck"
+    },
+    {
+      "trait_type": "Lamp",
+      "value": "Dark"
+    },
+    {
+      "trait_type": "Plate",
+      "value": "Plated"
+    },
+    {
+      "trait_type": "Rarity rank",
+      "value": 853,
+      "display_type": "number",
+      "max_value": 5000
+    }
+  ]
+}
