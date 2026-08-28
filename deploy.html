@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deploy · HOODESKS</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Admin tool. Deploys the collection from a browser wallet.">
+<link rel="icon" href="assets/img/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/app.css">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('hoodesks-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+</head>
+<body>
+<div class="shell">
+  <header id="hdr" class="hdr"></header>
+
+  <main class="stack">
+
+    <section class="frame ptitle">
+      <div class="frame__in">
+        <h1>Deploy the collection<span class="cursor" aria-hidden="true"></span></h1>
+        <p>
+          Admin tool. It builds the creation transaction and hands it to your browser
+          wallet to sign — no key is ever typed, pasted or stored here. Rehearse on the
+          testnet before you touch mainnet.
+        </p>
+      </div>
+    </section>
+
+    <!-- 1 — wallet -->
+    <section class="frame">
+      <div class="frame__in">
+        <div class="frame__head">
+          <h2 class="frame__title"><span>01 · Wallet</span></h2>
+          <span class="pill" id="net-pill">Not connected</span>
+        </div>
+        <div class="stack-sm">
+          <div id="wallet-info" class="note">No wallet connected.</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn--primary btn--sm" id="connect" type="button">Connect wallet</button>
+            <button class="btn btn--ghost btn--sm" id="to-testnet" type="button">Switch to testnet</button>
+            <button class="btn btn--ghost btn--sm" id="to-mainnet" type="button">Switch to mainnet</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 — parameters -->
+    <section class="frame">
+      <div class="frame__in">
+        <div class="frame__head">
+          <h2 class="frame__title"><span>02 · Constructor</span></h2>
+          <span class="pill" id="build-pill">—</span>
+        </div>
+
+        <div class="stack-sm">
+          <label class="field">
+            <span class="field__k">Deposit token — the launch token from Pons</span>
+            <input class="input field__i" id="p-token" placeholder="0x…" spellcheck="false">
+          </label>
+          <label class="field">
+            <span class="field__k">Deposit amount — whole tokens burned per mint</span>
+            <input class="input field__i" id="p-amount" inputmode="decimal" spellcheck="false">
+          </label>
+          <label class="field">
+            <span class="field__k">Protocol wallet — receives the cut of each mint</span>
+            <input class="input field__i" id="p-protocol" placeholder="0x…" spellcheck="false">
+          </label>
+          <label class="field">
+            <span class="field__k">Base URI — must end with a slash</span>
+            <input class="input field__i" id="p-uri" placeholder="ipfs://…/" spellcheck="false">
+          </label>
+          <label class="field">
+            <span class="field__k">Owner — leave blank to use the connected wallet</span>
+            <input class="input field__i" id="p-owner" placeholder="0x…" spellcheck="false">
+          </label>
+        </div>
+
+        <div style="margin-top:14px">
+          <div class="stat__k" style="margin-bottom:8px">Rotation · fixed at deploy</div>
+          <div class="chips" id="rotation"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 — preflight -->
+    <section class="frame">
+      <div class="frame__in">
+        <div class="frame__head">
+          <h2 class="frame__title"><span>03 · Preflight</span></h2>
+          <button class="btn btn--ghost btn--sm" id="check" type="button">Run checks</button>
+        </div>
+        <div id="checks" class="note">Not run.</div>
+      </div>
+    </section>
+
+    <!-- 4 — deploy -->
+    <section class="frame">
+      <div class="frame__in">
+        <div class="frame__head">
+          <h2 class="frame__title"><span>04 · Deploy</span></h2>
+        </div>
+        <div class="stack-sm">
+          <label class="fopt" id="confirm-row" style="display:none">
+            <input type="checkbox" id="confirm">
+            <span>I understand this is <b>mainnet</b>, costs real ETH, and cannot be undone.</span>
+          </label>
+          <button class="btn btn--primary btn--block" id="deploy" type="button" disabled>Deploy</button>
+          <div id="result"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="ftr"></footer>
+</div>
+<script type="module" src="assets/js/pages/deploy.js"></script>
+</body>
+</html>

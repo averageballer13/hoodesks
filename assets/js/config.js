@@ -41,7 +41,7 @@ export const BRAND = {
    ------------------------------------------------------------------------ */
 export const ECON = {
   supply: 5000,               // desks that can ever exist
-  deposit: 1_000_000,         // burned per mint
+  deposit: 100_000,           // burned per mint — see the supply check below
   surcharge: 0.01,            // ETH, charged by the mint instruction
   surchargeToPot: 0.009,      // ETH
   surchargeToProtocol: 0.001, // ETH
@@ -93,8 +93,11 @@ export const ACCOUNTS = [
 export const TOKEN = {
   symbol: TOKEN_SYMBOL,
   address: null,
+  // Fixed at creation on the launchpad and immutable afterwards, so the
+  // deposit has to be sized against it before the token exists.
+  // supply x deposit must leave room: 5,000 x 100,000 burns 500M, half of it.
   supplyInitial: 1_000_000_000,
-  pons: 'https://pons.xyz',
+  pons: 'https://www.ponsfamily.com/launchpad/create',
 };
 
 /**

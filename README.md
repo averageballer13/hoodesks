@@ -167,6 +167,37 @@ encoder (GIF89a + LZW) is written into the tool on top of nothing at all.
 
 ---
 
+## Deploying the contract
+
+Two ways, same transaction.
+
+**From the browser** — open `deploy.html` and connect a wallet. It fills in
+what it knows, runs a preflight (balance, addresses, whether the deposit token
+and all ten rotation tokens actually have code on the chain you are on, and
+whether a sell-out would burn more tokens than exist), then hands the creation
+transaction to the wallet to sign. No key is typed, pasted or stored — the
+page only encodes. Mainnet needs an extra confirmation before the button
+unlocks.
+
+The page carries a compiled build. After any contract change:
+
+```bash
+cd contracts && npx hardhat compile && cd ..
+node tools/export-abi.mjs
+```
+
+which regenerates `assets/js/contract.js` and stamps a build fingerprint the
+page shows, so a deployed contract can be traced back to a build. Skip it and
+you deploy a stale one.
+
+`deploy.html` is an admin tool. It is `noindex`, not in the nav, and worth
+deleting from the public host once the contract is live.
+
+**From the command line** — see `contracts/README.md`. The CLI path also
+rehearses the whole cycle on the testnet, which the browser cannot do.
+
+---
+
 ## Brand
 
 The masters live in `brand/` and everything the site serves is derived from

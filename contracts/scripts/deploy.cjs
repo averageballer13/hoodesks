@@ -65,7 +65,7 @@ async function main() {
   const protocolWallet = required('PROTOCOL_WALLET');
   const baseURI = required('BASE_URI');
   const owner = process.env.OWNER || deployer.address;
-  const depositAmount = ethers.parseUnits(process.env.DEPOSIT_AMOUNT || '1000000', 18);
+  const depositAmount = ethers.parseUnits(process.env.DEPOSIT_AMOUNT || '100000', 18);
 
   /* -- the rotation ------------------------------------------------------ */
 

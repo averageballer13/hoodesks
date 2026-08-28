@@ -20,9 +20,34 @@ const arg = (n, d) => {
   return i === -1 ? d : Number(process.argv[i + 1]);
 };
 
+import { TOKEN } from '../assets/js/config.js';
+
 const SUPPLY = ECON.supply;
-const TO_POT = ECON.surchargeToPot;   // 0.045 ETH per mint
-const SURCHARGE = ECON.surcharge;     // 0.05 ETH paid by the minter
+const TO_POT = ECON.surchargeToPot;   // per mint, into the pot
+const SURCHARGE = ECON.surcharge;     // paid by the minter
+
+/* -- supply check ---------------------------------------------------------
+   The launchpad fixes the token supply at creation and it can never change,
+   so the deposit has to fit inside it. Selling out burns supply x deposit; if
+   that exceeds what exists, the mint stalls partway and the collection can
+   never complete.
+   ------------------------------------------------------------------------ */
+{
+  const burned = SUPPLY * ECON.deposit;
+  const pct = (burned / TOKEN.supplyInitial) * 100;
+  console.log('SUPPLY CHECK');
+  console.log(`  ${SUPPLY.toLocaleString('en-US')} desks x ${ECON.deposit.toLocaleString('en-US')} = ` +
+    `${(burned / 1e6).toFixed(0)}M burned against a ${(TOKEN.supplyInitial / 1e9).toFixed(1)}B supply`);
+  if (burned > TOKEN.supplyInitial) {
+    const mintable = Math.floor(TOKEN.supplyInitial / ECON.deposit);
+    console.log(`  BROKEN — only ${mintable.toLocaleString('en-US')} desks could ever be minted.`);
+    console.log('  Lower the deposit or raise the token supply before launching.');
+    process.exitCode = 1;
+  } else {
+    console.log(`  OK — ${pct.toFixed(0)}% of the supply destroyed at full sell-out,`);
+    console.log('  And that assumes every minter actually holds the deposit.');
+  }
+}
 
 /* -- the mint phase -------------------------------------------------------
    Mint number k puts TO_POT into the pot while raising the supply to k. The
