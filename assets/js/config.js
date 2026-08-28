@@ -83,7 +83,7 @@ export const ROTATION = [
    Fill `addr` and drop `pending` as each contract is deployed.
    ------------------------------------------------------------------------ */
 export const ACCOUNTS = [
-  { label: 'Protocol wallet', addr: '0xa0A502e18D8EC97FF64338741b3296e65147002f' },
+  { label: 'Protocol wallet', addr: '0x70a273Bb8225b0788c8C6970195871841d01959E' },
   { label: 'Collection · pot', addr: null, pending: true },
   { label: 'Vault implementation', addr: null, pending: true },
   { label: 'Swap adapter', addr: null, pending: true },

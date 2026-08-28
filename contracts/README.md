@@ -77,7 +77,7 @@ touches disk:
 
 ```bash
 export DEPLOYER_KEY=...        # never commit, never paste anywhere
-export PROTOCOL_WALLET=0xa0A502e18D8EC97FF64338741b3296e65147002f
+export PROTOCOL_WALLET=0x70a273Bb8225b0788c8C6970195871841d01959E
 export BASE_URI=ipfs://<cid>/
 ```
 
